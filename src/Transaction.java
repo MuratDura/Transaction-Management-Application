@@ -12,13 +12,14 @@ public class Transaction {
 	private Random random = new Random();
 	private static final int LOWER_BOUND_QUANTITY = 1;
 	private static final int UPPER_BOUND_QUANTITY = 10;
-	private static int COUNTER;
+	private static int COUNTER = 0;
 	private int size = 0; 
 	private static final int NUMBER_OF_PRODUCTS = 3;
 	private FileIO fileIO = new FileIO();
 	
 	
 	public Transaction() {
+		this.transactionID = COUNTER++;
 		this.products = new Product[NUMBER_OF_PRODUCTS];
 		for (int index = 0; index < this.products.length; index++) {
 			int quantity = random.nextInt(LOWER_BOUND_QUANTITY, UPPER_BOUND_QUANTITY + 1);
