@@ -67,10 +67,6 @@ public class FileIO {
 				System.out.println(e.getLocalizedMessage());
 			}
 		}
-		
-		
 		return shopAssistantToReturn;
-		
 	}
-
 }
