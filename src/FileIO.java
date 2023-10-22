@@ -1,12 +1,10 @@
-package helper;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import transactionManagement.ShopAssistant;
+import ShopAssistant;
 
 public class FileIO {
 	
