@@ -1,8 +1,7 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-
-        
+        ShopAssistant[] myShopAssistantArray = FileIO.createShopAssistantArrayByFile("shopAssistants.csv");
+		System.out.println(myShopAssistantArray[99]); 
 
     }
 }
