@@ -21,9 +21,11 @@ public class ShopAssistant {
     // Utility objects and additional properties
     private final Random rand = new Random();
     private int commission = 0;
-    private int totalSalary = 0;
+    private int bonus = 0;
     private int weeklySalary;
-    private int bonus;
+    private int totalSalary = (weeklySalary * 4) + commission + bonus;;
+
+
 
     // Constructor for ShopAssistant
     public ShopAssistant(int ID, String name, String surname, String phoneNumber) {
@@ -78,7 +80,7 @@ public class ShopAssistant {
         }
     }
 
-    // Calculate total salary including bonuses and commissions
+
     public void setTotalSalary() {
         totalSalary = (weeklySalary * 4) + commission + bonus;
     }
