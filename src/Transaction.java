@@ -92,11 +92,4 @@ public class Transaction {
 		return this.totalPrice;
 	}
 	
-	public static void main(String[] args) {
-		Product[] products = {new Product(3, "banana", 38, 10), new Product(4, "strawberry", 45, 5), new Product(5, "kiwi", 22, 3)};
-		Transaction transaction = new Transaction(products);
-		System.out.println(transaction.getTotalPrice());
-		System.out.println(transaction);
-	}
-
 }
