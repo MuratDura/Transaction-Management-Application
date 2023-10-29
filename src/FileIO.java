@@ -74,7 +74,7 @@ public class FileIO {
 	public static Product[] createProductArrayByFile(String fileName) {
 		BufferedReader bufferedReader;
 		String readLine;
-		Product[] productArray = new Product[100];
+		Product[] productArray = new Product[90];
 		
 		try {
 			bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -121,7 +121,10 @@ public class FileIO {
 			try {
 				int ID = Integer.valueOf(stringTokenizer.nextToken());
 				String name = stringTokenizer.nextToken();
-				double price = Double.parseDouble(stringTokenizer.nextToken());
+				String priceTemp = stringTokenizer.nextToken();
+				// Converting 5,99 to 5.99 format
+				priceTemp = priceTemp.replaceAll(",", ".");
+				double price = Double.parseDouble(priceTemp);
 				productToReturn = new Product(ID, name, price);
 			}
 			catch (IllegalArgumentException e) {
