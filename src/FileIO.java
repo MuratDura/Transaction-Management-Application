@@ -1,10 +1,13 @@
+package helper;
+
+import transactionManagement.Product;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import ShopAssistant;
+import transactionManagement.ShopAssistant;
 
 public class FileIO {
 	
@@ -67,4 +70,65 @@ public class FileIO {
 		}
 		return shopAssistantToReturn;
 	}
+	
+	public static Product[] createProductArrayByFile(String fileName) {
+		BufferedReader bufferedReader;
+		String readLine;
+		Product[] productArray = new Product[100];
+		
+		try {
+			bufferedReader = new BufferedReader(new FileReader(fileName));
+			readLine = bufferedReader.readLine();
+			
+			int arrayCounter = 0;
+			while (readLine != null) {
+				if (createProductByLine(readLine) == null) {
+					bufferedReader.close();
+					return null;
+				} 
+				else {
+					productArray[arrayCounter] = createProductByLine(readLine);
+					readLine = bufferedReader.readLine();
+					arrayCounter ++;
+				}
+			}
+			bufferedReader.close();
+		}
+		catch (FileNotFoundException e) {
+			System.out.println(e.getLocalizedMessage());
+			return null;
+		}
+		catch (IOException e) {
+			System.out.println(e.getLocalizedMessage());
+			return null;
+		}
+		
+		return productArray;
+	}
+	
+	public static Product createProductByLine(String line) {
+		String DELIMITER = ";";
+		int TOKEN_NUMBER = 3;
+		StringTokenizer stringTokenizer;
+		Product productToReturn = null;
+		
+		stringTokenizer = new StringTokenizer(line, DELIMITER);
+		
+		if (stringTokenizer.countTokens() != TOKEN_NUMBER) {
+			return null;
+		}
+		else {
+			try {
+				int ID = Integer.valueOf(stringTokenizer.nextToken());
+				String name = stringTokenizer.nextToken();
+				double price = Double.parseDouble(stringTokenizer.nextToken());
+				productToReturn = new Product(ID, name, price);
+			}
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getLocalizedMessage());
+			}
+		}
+		return productToReturn;
+	}
+	
 }
