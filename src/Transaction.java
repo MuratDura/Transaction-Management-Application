@@ -1,7 +1,9 @@
-package project;
+package transactionManagement;
+
 import java.util.Arrays;
 import helper.FileIO;
 import java.util.Random;
+
 public class Transaction {
 	
 	private int transactionID;
@@ -49,7 +51,8 @@ public class Transaction {
 		//System.out.printf("\n************random product index: %d", randid);
 		Product randomProduct = new Product(products[randid]);
 		this.products[size++] = randomProduct;
-		this.totalPrice += randomProduct.getPrice() * getRandomQuantity(randomProduct);
+		setRandomQuantity(randomProduct);
+		this.totalPrice += randomProduct.getPrice();
 		
 	}
 	
@@ -82,10 +85,9 @@ public class Transaction {
 		return randomId;
 	}
 	
-	private int getRandomQuantity(Product product) {
+	private void setRandomQuantity(Product product) {
 		int randomQuantity = random.nextInt(LOWER_BOUND_QUANTITY, UPPER_BOUND_QUANTITY+1);
 		product.setQuantity(randomQuantity);
-		return randomQuantity;
 	}
 
 	public double getTotalPrice() {
