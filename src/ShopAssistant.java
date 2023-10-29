@@ -1,3 +1,5 @@
+package transactionManagement;
+
 import java.util.Random;
 
 public class ShopAssistant {
@@ -79,7 +81,10 @@ public class ShopAssistant {
             this.commission += commission;
         }
     }
-
+    
+    public int getID() {
+    	return this.ID;
+    }
 
     public void setTotalSalary() {
         totalSalary = (weeklySalary * 4) + commission + bonus;
