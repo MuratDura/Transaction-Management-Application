@@ -44,7 +44,25 @@ public class Product {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	// Overriding toString() method
 	public String toString() {
 		return String.valueOf(ID) + " " + name + " " + String.valueOf(price) + " " + String.valueOf(quantity);
+	}
+	
+	// Overriding equals() method
+	public boolean equals(Object object) {
+		// If they are the same object
+		if (object == this) {
+			return true;
+		}
+		// If object type is different
+		if (!(object instanceof Product)) {
+			return false;
+		}
+		
+		Product otherProduct = (Product) object;
+		
+		return (this.ID == otherProduct.getID() && this.name == otherProduct.getName() &&
+				this.price == otherProduct.getPrice() && this.quantity == otherProduct.getQuantity());
 	}
 }
