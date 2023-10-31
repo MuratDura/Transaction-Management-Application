@@ -1,96 +1,106 @@
 package transactionManagement;
-import java.util.Arrays;
+import java.util.Random;
 
-public class TransactionManagement {
-	private Transaction[][] transactions; // stores transactions in a way that each row represents one shop assistant's transactions
-	private final int shopAssistantCapacity;
-	private final int transactionCapacity;
-	private static final int MAX_CAPACITY = 10_000; 
-	
-	//some several constants related to transaction fee 
-	private static final int BOUND1 = 499;
-	private static final int FEE1 = 1;
-	private static final int BOUND2 = 799;
-	private static final int FEE2 = 3;
-	private static final int BOUND3 = 999;
-	private static final int FEE3 = 5;
-	private static final int FEE4 = 9;
-	
-	//some other constants related to commission paid to a shop assistant
-	private static final int TOTAL_REVENUE_BOUND = 7500;
-	private static final int HIGH_COMMISSION = 3; // percentage
-	private static final int LOWER_COMMISSION = 1; // percentage
-	
-	
-	public TransactionManagement(int shopAssistantCapacity, int transactionCapacity) {
-		this.shopAssistantCapacity = shopAssistantCapacity;
-		this.transactionCapacity = transactionCapacity;
-		if (shopAssistantCapacity > MAX_CAPACITY || transactionCapacity > MAX_CAPACITY) {
-			throw new IllegalArgumentException("Shop Assistant or Transaction Capacity cannot be greater than " + MAX_CAPACITY);
+public class Transaction {
+	//Attributes
+	private int transactionID;
+	private Product[] products;
+	private double totalPrice;
+	private double transactionFee;
+	//Some several helper constant fields
+	private Random random = new Random();
+	private static final int LOWER_BOUND_QUANTITY = 1;
+	private static final int UPPER_BOUND_QUANTITY = 10;
+	private static int COUNTER = 0; //to help assign transaction id
+	private int size = 0;
+	private static final int NUMBER_OF_PRODUCTS = 3;
+
+	public Transaction(Product[] products) {
+		if (products == null) {
+			throw new IllegalArgumentException("The product array cannot be null.");
 		}
-		this.transactions = new Transaction[shopAssistantCapacity][transactionCapacity];
+		//assign an id
+		this.transactionID = COUNTER++;
+		this.products = new Product[NUMBER_OF_PRODUCTS];
+		for (int index = 0; index < this.products.length; index++) {
+			addProduct(products);
+		}
 	}
-	
-	/**
-	 * adds a new transaction to the transactions field 
-	 * determining its transaction fee according to its total price
-	 * @param transaction
+
+	//copy constructor
+	public Transaction(Transaction source) {
+		this.transactionID = source.transactionID;
+		this.products = copyTransactionArray(source.products);
+		this.totalPrice = source.totalPrice;
+		this.transactionFee = source.transactionFee;
+	}
+
+	/**addProduct
+	 * adds a random product with a random quantity to the transaction from the array of products passed in
+	 * @param products
 	 */
-	public void addTransaction(int shopAssistantID, Transaction transaction) {
-		//input validation
-		if (shopAssistantID < 0) {
-			throw new IllegalArgumentException("Shop assistant ID cannot be less than 0.");
+	private void addProduct(Product[] products) {
+		if (size == NUMBER_OF_PRODUCTS) {
+			System.out.printf("Transaction limited to %d products.", NUMBER_OF_PRODUCTS);
+			return;
 		}
-		if (transaction == null) {
-			throw new IllegalArgumentException("Transaction cannot be null.");
+		int randid = getRandomProductId(products.length);
+		//System.out.printf("\n******random product index: %d", randid);
+		Product randomProduct = new Product(products[randid]);
+		this.products[size++] = randomProduct;
+		setRandomQuantity(randomProduct);
+		this.totalPrice += randomProduct.getPrice();
+
+	}
+
+	public void setTransactionFee(int transactionFeePercentage) {
+		if (transactionFee < 0) {
+			throw new IllegalArgumentException("Transaction fee cannot be less than 0.");
 		}
-		
-		for (int index = 0; index < transactions[shopAssistantID].length; index++) {
-	        if (this.transactions[shopAssistantID][index] == null) {
-	        	Transaction copyTransaction = new Transaction(transaction);
-	            this.transactions[shopAssistantID][index] = transaction;
-	            setTransactionFee(transaction);
-	            break;
-	        }
-	    }
+		this.transactionFee = this.totalPrice * transactionFeePercentage / 100;
 	}
-	
-	public void setCommission(ShopAssistant shopAssistant) {
-		int index = shopAssistant.getID();
-		double totalRevenue = 0;
-		int i = 0;
-		while (transactions[index][i] != null) {
-			totalRevenue += transactions[index][i].getTotalPrice();
-			i++;
+
+	@Override
+	public String toString() {
+		String info = "Transaction: " + transactionID + "\nProducts: \n";
+		for (int i = 0; i < this.products.length; i++) {
+			info += "\t" + this.products[i].toString() + "\n";
 		}
-		if (totalRevenue > TOTAL_REVENUE_BOUND) {
-			shopAssistant.addCommission(HIGH_COMMISSION);
-		}else {
-			shopAssistant.addCommission(LOWER_COMMISSION);
+		info += "Total Price: " + totalPrice + "\nTransaction Fee = " + transactionFee + "\n";
+		return info;
+	}
+
+	private Product[] copyTransactionArray(Product[] products) {
+		Product[] newArr = new Product[products.length];
+		for (int index = 0; index < products.length; index++) {
+			newArr[index] = new Product(products[index]);
+		}return newArr;
+	}
+
+	private int getRandomProductId(int bound) {
+		int randomId = random.nextInt(bound);
+		return randomId;
+	}
+
+	private void setRandomQuantity(Product product) {
+		int randomQuantity = random.nextInt(LOWER_BOUND_QUANTITY, UPPER_BOUND_QUANTITY+1);
+		product.setQuantity(randomQuantity);
+	}
+
+	public double getTotalPrice() {
+		return this.totalPrice;
+	}
+
+	public double getTransactionFee() {
+		return this.transactionFee;
+	}
+
+	public Product[] getProducts() {
+		Product[] temp = new Product[this.products.length];
+		for (int i = 0; i < this.products.length; i++) {
+			temp[i] = new Product(this.products[i]);
 		}
+		return temp;
 	}
-	
-	private void setTransactionFee(Transaction transaction) {
-		double totalPrice = transaction.getTotalPrice();
-		if (totalPrice <= BOUND1) {
-			transaction.setTransactionFee(FEE1);
-		}else if (totalPrice <= BOUND2) {
-			transaction.setTransactionFee(FEE2);
-		}else if (totalPrice <= BOUND3) {
-			transaction.setTransactionFee(FEE3);
-		}else {
-			transaction.setTransactionFee(FEE4);
-		}
-	}
-	
-	public Transaction[][] getTransactions(){
-		return transactions;
-	}
-	
-	public int getShopAssistantCapacity() {
-		return this.shopAssistantCapacity;
-	}
-	
-	public int getTransactionCapacity() {
-		return this.transactionCapacity;
-	}}
+
+}
