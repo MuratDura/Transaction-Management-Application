@@ -1,13 +1,11 @@
+package transactionManagement;
 import java.util.Arrays;
-import transactionManagement.Transaction;
-import transactionManagement.ShopAssistant;
 
 public class TransactionManagement {
 	private Transaction[][] transactions; // stores transactions in a way that each row represents one shop assistant's transactions
-	private int shopAssistantCapacity = 20; // initial value for rows
-	private int transactionCapacity = 5; // initial value for columns
-	private int shopAssistantSize; // number of present shop assistants
-	private int transactionSize; // number of present transactions within a row
+	private final int shopAssistantCapacity;
+	private final int transactionCapacity;
+	private static final int MAX_CAPACITY = 10_000; 
 	
 	//some several constants related to transaction fee 
 	private static final int BOUND1 = 499;
@@ -24,7 +22,12 @@ public class TransactionManagement {
 	private static final int LOWER_COMMISSION = 1; // percentage
 	
 	
-	public TransactionManagement() {
+	public TransactionManagement(int shopAssistantCapacity, int transactionCapacity) {
+		this.shopAssistantCapacity = shopAssistantCapacity;
+		this.transactionCapacity = transactionCapacity;
+		if (shopAssistantCapacity > MAX_CAPACITY || transactionCapacity > MAX_CAPACITY) {
+			throw new IllegalArgumentException("Shop Assistant or Transaction Capacity cannot be greater than " + MAX_CAPACITY);
+		}
 		this.transactions = new Transaction[shopAssistantCapacity][transactionCapacity];
 	}
 	
@@ -33,63 +36,27 @@ public class TransactionManagement {
 	 * determining its transaction fee according to its total price
 	 * @param transaction
 	 */
-	public void addTransaction(Transaction transaction) {
+	public void addTransaction(int shopAssistantID, Transaction transaction) {
 		//input validation
+		if (shopAssistantID < 0) {
+			throw new IllegalArgumentException("Shop assistant ID cannot be less than 0.");
+		}
 		if (transaction == null) {
 			throw new IllegalArgumentException("Transaction cannot be null.");
 		}
-		//check and increase the capacity if it is full
-		checkTransactionCapacity();
-		//determine the transaction fee of the transaction being added
-		setTransactionFee(transaction);
-		this.transactions[shopAssistantSize][transactionSize++] = new Transaction(transaction);
-	}
-	
-	/**
-	 * adds a new row to the 2D array for another shop assistant 
-	 * @param shopAssistant
-	 */
-	public void addShopAssistant() {
-		// reset the transaction size for the new shop assistant
-		transactionSize = 0;
-		//check capacity and increase if needed
-		checkShopAssistantCapacity();
-		shopAssistantSize++;
-	}
-	
-	//*************HELPER METHODS****************
-	
-	private void checkShopAssistantCapacity(){
-		if (shopAssistantSize >= shopAssistantCapacity) {
-			shopAssistantCapacity *= 2;
-			Transaction[][] temp = new Transaction[shopAssistantCapacity][transactionCapacity];
-			for (int i = 0; i < shopAssistantSize; i++) {
-				for (int j = 0; j < transactionSize; j++) {
-					temp[i][j] = this.transactions[i][j];
-				}
-			}
-			this.transactions = temp;
-		}
-	}
-	
-	private void checkTransactionCapacity() {
-		if (transactionSize >= transactionCapacity) {
-			transactionCapacity *= 2;
-			Transaction[][] temp = new Transaction[shopAssistantCapacity][transactionCapacity];
-			for (int i = 0; i < shopAssistantSize; i++) {
-				for (int j = 0; j < transactionSize; j++) {
-					temp[i][j] = this.transactions[i][j];
-				}
-			}
-			this.transactions = temp;
-		}
+		
+		for (int index = 0; index < transactions[shopAssistantID].length; index++) {
+	        if (this.transactions[shopAssistantID][index] == null) {
+	        	Transaction copyTransaction = new Transaction(transaction);
+	            this.transactions[shopAssistantID][index] = transaction;
+	            setTransactionFee(transaction);
+	            break;
+	        }
+	    }
 	}
 	
 	public void setCommission(ShopAssistant shopAssistant) {
 		int index = shopAssistant.getID();
-		if (index >= shopAssistantSize) {
-			throw new IllegalArgumentException("Shop assistant cannot be found.");
-		}
 		double totalRevenue = 0;
 		int i = 0;
 		while (transactions[index][i] != null) {
@@ -120,18 +87,10 @@ public class TransactionManagement {
 		return transactions;
 	}
 	
-	@Override
-	public String toString() {
-		String result = "";
-		for (int i = 0; i <= shopAssistantSize; i++) {
-			result += "-----------Shop Assistant id: " + i + "-------------\n";
-			int j = 0;
-			while (transactions[i][j] != null) {
-				Transaction transaction = transactions[i][j];
-				result += transaction + "\n";
-				j++;
-			}
-		}
-		return result;
+	public int getShopAssistantCapacity() {
+		return this.shopAssistantCapacity;
 	}
-}
+	
+	public int getTransactionCapacity() {
+		return this.transactionCapacity;
+	}
