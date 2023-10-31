@@ -93,4 +93,4 @@ public class TransactionManagement {
 	
 	public int getTransactionCapacity() {
 		return this.transactionCapacity;
-	}
+	}}

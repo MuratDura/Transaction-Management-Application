@@ -8,12 +8,15 @@ public class SalaryManagement {
     private int index = 0;
     // Array to store ShopAssistant objects
     private ShopAssistant[] salaryManager;
+    public int length=0;
 
     // Constructor method: creates an array with the initial capacity
     public SalaryManagement() {
         salaryManager = new ShopAssistant[capacity];
     }
-
+    public ShopAssistant getAssistantByIndex(int AssistantIndex){
+        return salaryManager[AssistantIndex];
+    }
     // Method to add a new ShopAssistant object
     public void AddAssistant(ShopAssistant assistant) {
         // Increase the capacity if the array is full
@@ -27,6 +30,7 @@ public class SalaryManagement {
         // Add the incoming ShopAssistant object to the array and increment the index
         this.salaryManager[index] = assistant;
         index++;
+        length++;
     }
 
     // Helper method to double the capacity of the array

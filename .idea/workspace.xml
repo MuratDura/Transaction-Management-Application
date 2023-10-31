@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2f42cbfb-4c92-42fd-ab7c-49f8aac122b5" name="Changes" comment="Commit">
-      <change beforePath="$PROJECT_DIR$/src/FileIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileIO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SalaryManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/transactionManagement/SalaryManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/transactionManagement/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TransactionManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/transactionManagement/TransactionManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/transactionManagement/SalaryManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/transactionManagement/SalaryManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/transactionManagement/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/transactionManagement/Transaction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,14 +33,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "app.teamhub.trackedBranches": "-1vnqof/master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;app.teamhub.trackedBranches&quot;: &quot;-1vnqof/master&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -96,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698767681733</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Commit">
+      <created>1698768780008</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1698768780008</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

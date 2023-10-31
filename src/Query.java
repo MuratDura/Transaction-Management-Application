@@ -1,20 +1,21 @@
+import transactionManagement.SalaryManagement;
 import transactionManagement.Transaction;
 import transactionManagement.Product;
 import transactionManagement.ShopAssistant;
-
+import transactionManagement.TransactionManagement;
 
 public class Query {
 
-	// Query 1
-	public static Transaction findHighestTotalPriceTransaction(TransactionManagement transactionManagement) {
+    // Query 1
+    public static Transaction findHighestTotalPriceTransaction(TransactionManagement transactionManagement) {
         Transaction highestTotalPriceTransaction=null;
         double maxTotalPrice=Double.MIN_VALUE;
 
         Transaction[][] transactions=transactionManagement.getTransactions();
 
-        for (int i=0; i<=transactionManagement.getShopAssistantSize(); i++) {
+        for (int i=0; i<transactionManagement.getShopAssistantCapacity(); i++) {
             int j=0;
-            while (transactions[i][j]!=null) {
+            while (j < transactionManagement.getTransactionCapacity() && transactions[i][j]!=null) {
                 Transaction transaction= transactions[i][j];
                 if (transaction.getTotalPrice() > maxTotalPrice) {
                     maxTotalPrice= transaction.getTotalPrice();
@@ -26,32 +27,32 @@ public class Query {
 
         return highestTotalPriceTransaction;
     }
-	
-	// Query 2
+
+    // Query 2
     public static Product findMostExpensiveProductInLowestPriceTransaction(TransactionManagement transactionManagement) {
         Product mostExpensiveProduct=null;
         double minTotalPrice= Double.MAX_VALUE;
 
-        
+
         Transaction[][] transactions=transactionManagement.getTransactions();
 
-        
-        for (int i=0; i<=transactionManagement.getShopAssistantSize(); i++) {
+
+        for (int i=0; i< transactionManagement.getShopAssistantCapacity(); i++) {
             int j=0;
-            while (transactions[i][j]!=null) {
+            while (j < transactionManagement.getTransactionCapacity() && transactions[i][j]!=null) {
                 Transaction transaction=transactions[i][j];
                 if (transaction.getTotalPrice() < minTotalPrice) {
                     minTotalPrice=transaction.getTotalPrice();
                     Product[] products=transaction.getProducts();
                     mostExpensiveProduct=findMostExpensiveProduct(products);
                 }
-                		j++;
+                j++;
             }
         }
 
         return mostExpensiveProduct;
     }
-	
+
     // Query 3
     public static Transaction findLowestTransactionFee(TransactionManagement transactionManagement) {
         Transaction lowestTransactionFeeTransaction=null;
@@ -59,9 +60,9 @@ public class Query {
 
         Transaction[][] transactions=transactionManagement.getTransactions();
 
-        for (int i=0; i <=transactionManagement.getShopAssistantSize(); i++) {
+        for (int i=0; i < transactionManagement.getShopAssistantCapacity(); i++) {
             int j=0;
-            while (transactions[i][j]!=null) {
+            while (j < transactionManagement.getTransactionCapacity() && transactions[i][j]!=null) {
                 Transaction transaction=transactions[i][j];
                 if (transaction.getTransactionFee() < minTransactionFee) {
                     minTransactionFee = transaction.getTransactionFee();
@@ -75,12 +76,12 @@ public class Query {
     }
     
     // Query 4 
-    public static ShopAssistant findHighestSalaryShopAssistant(TransactionManagement transactionManagement) {
+    public static ShopAssistant findHighestSalaryShopAssistant(SalaryManagement salaryManagement) {
         ShopAssistant highestSalaryShopAssistant = null;
         double maxTotalSalary=Double.MIN_VALUE;
 
-        for (int i=0; i<=transactionManagement.getShopAssistantSize(); i++) {
-            ShopAssistant shopAssistant=transactionManagement.getTransactions()[i][0].getProducts()[0].getShopAssistant();
+        for (int i=0; i<=salaryManagement.length; i++) {
+
             transactionManagement.setCommission(shopAssistant);
             double totalSalary=shopAssistant.getTotalSalary();
             if (totalSalary > maxTotalSalary) {
@@ -96,9 +97,9 @@ public class Query {
     public static double calculateTotalRevenue(TransactionManagement transactionManagement) {
         double totalRevenue=0;
 
-        for (int i=0; i<=transactionManagement.getShopAssistantSize(); i++) {
+        for (int i=0; i< transactionManagement.getShopAssistantCapacity(); i++) {
             int j=0;
-            while (transactionManagement.getTransactions()[i][j]!=null) {
+            while (j < transactionManagement.getTransactionCapacity() && transactionManagement.getTransactions()[i][j]!=null) {
                 Transaction transaction= transactionManagement.getTransactions()[i][j];
                 totalRevenue+=transaction.getTotalPrice() +transaction.getTransactionFee();
                 j++;
@@ -112,7 +113,7 @@ public class Query {
     public static double calculateTotalProfit(TransactionManagement transactionManagement) {
         double totalProfit=0;
 
-        for (int i=0; i<=transactionManagement.getShopAssistantSize(); i++) {
+        for (int i=0; i<=transactionManagement.getShopAssistantCapacity(); i++) {
             ShopAssistant shopAssistant=transactionManagement.getTransactions()[i][0].getProducts()[0].getShopAssistant();
             transactionManagement.setCommission(shopAssistant);
             double totalSalary=shopAssistant.getTotalSalary();
