@@ -11,10 +11,14 @@ import transactionManagement.ShopAssistant;
 
 public class FileIO {
 	
+	private static final int productArraySize = 90;
+	private static final int shopAssistantArraySize = 100;
+	
+	// Takes file path as string and returns shopAssistant array
 	public static ShopAssistant[] createShopAssistantArrayByFile(String fileName) {
 		BufferedReader bufferedReader;
 		String readLine;
-		ShopAssistant[] shopAssistantArray = new ShopAssistant[100];
+		ShopAssistant[] shopAssistantArray = new ShopAssistant[shopAssistantArraySize];
 		
 		try {
 			bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -44,7 +48,7 @@ public class FileIO {
 		}
 		return shopAssistantArray; 
 	}
-	
+	// Takes a line and creates shopAssistant object
 	public static ShopAssistant createShopAssistantByLine(String line) {
 		String DELIMITER = ";";
 		int TOKEN_NUMBER = 4;
@@ -54,7 +58,7 @@ public class FileIO {
 		stringTokenizer = new StringTokenizer(line, DELIMITER);
 		
 		if (stringTokenizer.countTokens() != TOKEN_NUMBER) {
-			return null;
+			throw new IllegalArgumentException("Token numbers of shop assistants don't match.");
 		}
 		else {
 			try {
@@ -71,10 +75,11 @@ public class FileIO {
 		return shopAssistantToReturn;
 	}
 	
+	// Takes file path as string and returns array
 	public static Product[] createProductArrayByFile(String fileName) {
 		BufferedReader bufferedReader;
 		String readLine;
-		Product[] productArray = new Product[90];
+		Product[] productArray = new Product[productArraySize];
 		
 		try {
 			bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -105,7 +110,7 @@ public class FileIO {
 		
 		return productArray;
 	}
-	
+	// Takes a line and creates Product object
 	public static Product createProductByLine(String line) {
 		String DELIMITER = ";";
 		int TOKEN_NUMBER = 3;
@@ -115,7 +120,7 @@ public class FileIO {
 		stringTokenizer = new StringTokenizer(line, DELIMITER);
 		
 		if (stringTokenizer.countTokens() != TOKEN_NUMBER) {
-			return null;
+			throw new IllegalArgumentException("Token numbers of products don't match.");
 		}
 		else {
 			try {
