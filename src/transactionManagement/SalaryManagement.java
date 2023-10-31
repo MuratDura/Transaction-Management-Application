@@ -8,7 +8,7 @@ public class SalaryManagement {
     private int index = 0;
     // Array to store ShopAssistant objects
     private ShopAssistant[] salaryManager;
-    public int length=0;
+    private int length=0;
 
     // Constructor method: creates an array with the initial capacity
     public SalaryManagement() {
@@ -64,5 +64,9 @@ public class SalaryManagement {
             count++;
         }
         return sb.toString();
+    }
+
+    public int getLength() {
+        return length;
     }
 }

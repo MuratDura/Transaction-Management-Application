@@ -4,9 +4,6 @@ import transactionManagement.Product;
 import transactionManagement.ShopAssistant;
 import transactionManagement.TransactionManagement;
 
-public class Query {
-
-   package transactionManagement;
     public class Query {
 
         // Query 1
@@ -113,23 +110,16 @@ public class Query {
     }
 
         // Query 6
-        public static double calculateTotalProfit(TransactionManagement transactionManagement) {
+        public static double calculateTotalProfit(TransactionManagement transactionManagement,SalaryManagement salaryManagement) {
             double totalProfit=0;
+            double revenue = calculateTotalRevenue(transactionManagement);
+            totalProfit+=revenue;
+            for (int i=0; i< salaryManagement.getLength(); i++) {
+                ShopAssistant assistants = salaryManagement.getAssistantByIndex(i);
+                double totalSalary = assistants.getTotalSalary();
+                totalProfit-=totalSalary;
 
-            for (int i=0; i<transactionManagement.getShopAssistantCapacity(); i++) {
-                ShopAssistant shopAssistant=transactionManagement.getTransactions()[i][0].getProducts()[0].getShopAssistant();
-                transactionManagement.setCommission(shopAssistant);
-                double totalSalary=shopAssistant.getTotalSalary();
-
-                int j=0;
-                while (j < transactionManagement.getTransactionCapacity() && transactionManagement.getTransactions()[i][j]!=null) {
-                    Transaction transaction=transactionManagement.getTransactions()[i][j];
-                    double transactionCost=transaction.getTotalPrice() + transaction.getTransactionFee();
-                    totalProfit+= transactionCost-totalSalary;
-                    j++;
                 }
-            }
-
             return totalProfit;
         }
 
@@ -148,4 +138,3 @@ public class Query {
             return mostExpensiveProduct;
         }
     }
-}
