@@ -6,8 +6,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		// For test
-		ShopAssistant[] myShopAssistantArray = FileIO.createShopAssistantArrayByFile("shopAssistants.csv");
-		System.out.println(myShopAssistantArray[99]);
+		SalaryManagement myShopAssistantArray = FileIO.createShopAssistantArrayByFile("shopAssistants.csv");
+		System.out.println(SalaryManagement);
 		Product[] myProductArray = FileIO.createProductArrayByFile("products.csv");
 		System.out.println(myProductArray[89]);
 		Transaction transaction1 = new Transaction(myProductArray);

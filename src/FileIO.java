@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import transactionManagement.SalaryManagement;
 import transactionManagement.ShopAssistant;
 
 public class FileIO {
@@ -15,10 +16,10 @@ public class FileIO {
 	private static final int shopAssistantArraySize = 100;
 	
 	// Takes file path as string and returns shopAssistant array
-	public static ShopAssistant[] createShopAssistantArrayByFile(String fileName) {
+	public static SalaryManagement createShopAssistantArrayByFile(String fileName) {
 		BufferedReader bufferedReader;
 		String readLine;
-		ShopAssistant[] shopAssistantArray = new ShopAssistant[shopAssistantArraySize];
+		SalaryManagement salaryManagement = new SalaryManagement();
 		
 		try {
 			bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -31,7 +32,7 @@ public class FileIO {
 					return null;
 				} 
 				else {
-					shopAssistantArray[arrayCounter] = createShopAssistantByLine(readLine);
+					salaryManagement.AddAssistant( createShopAssistantByLine(readLine));
 					readLine = bufferedReader.readLine();
 					arrayCounter ++;
 				}
@@ -46,7 +47,7 @@ public class FileIO {
 			System.out.println(e.getLocalizedMessage());
 			return null;
 		}
-		return shopAssistantArray; 
+		return salaryManagement;
 	}
 	// Takes a line and creates shopAssistant object
 	public static ShopAssistant createShopAssistantByLine(String line) {

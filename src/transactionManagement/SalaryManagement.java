@@ -1,3 +1,4 @@
+package transactionManagement;
 import transactionManagement.ShopAssistant;
 
 public class SalaryManagement {
