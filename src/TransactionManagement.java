@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import transactionManagement.Transaction;
+import transactionManagement.ShopAssistant;
 
 public class TransactionManagement {
 	private Transaction[][] transactions; // stores transactions in a way that each row represents one shop assistant's transactions
@@ -84,7 +86,7 @@ public class TransactionManagement {
 	}
 	
 	public void setCommission(ShopAssistant shopAssistant) {
-		int index = shopAssistant.getId();
+		int index = shopAssistant.getID();
 		if (index >= shopAssistantSize) {
 			throw new IllegalArgumentException("Shop assistant cannot be found.");
 		}

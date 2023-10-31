@@ -1,5 +1,6 @@
 package transactionManagement;
 import helper.FileIO;
+import transactionManagement.ShopAssistant;
 
 public class Main {
 

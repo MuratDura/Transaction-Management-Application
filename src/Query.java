@@ -1,3 +1,8 @@
+import transactionManagement.Transaction;
+import transactionManagement.Product;
+import transactionManagement.ShopAssistant;
+
+
 public class Query {
 
 	// Query 1

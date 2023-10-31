@@ -1,3 +1,5 @@
+import transactionManagement.ShopAssistant;
+
 public class SalaryManagement {
     // Variable defining the initial capacity
     private int capacity = 30;
